@@ -102,5 +102,33 @@
 
     <p class="updated">最終更新日：2026年4月19日</p>
   </div>
+  <script>
+  // 招待リンクの処理
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const uid = params.get('uid');
+    if (!uid) return;
+
+    // 招待バナーを表示
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#1A1A2E;border-bottom:1px solid #4ECDC4;padding:16px 20px;z-index:9999;text-align:center;';
+    banner.innerHTML = `
+      <p style="color:#E0FAF8;font-size:15px;font-weight:700;margin-bottom:10px;">STARTにフレンド招待されました！</p>
+      <a href="start://user/${uid}" style="display:inline-block;background:#4ECDC4;color:#0D0D1A;font-weight:700;padding:10px 24px;border-radius:20px;font-size:14px;margin-right:8px;text-decoration:none;">アプリで開く</a>
+      <a href="https://apps.apple.com/jp/app/id6763206400" style="display:inline-block;background:#333;color:#E0FAF8;font-weight:700;padding:10px 24px;border-radius:20px;font-size:14px;text-decoration:none;">App Storeで入手</a>
+    `;
+    document.body.prepend(banner);
+
+    // アプリを自動で開こうとする
+    setTimeout(() => {
+      window.location.href = `start://user/${uid}`;
+    }, 500);
+
+    // 2秒後にアプリが開かなかった場合はApp Storeへ
+    setTimeout(() => {
+      window.location.href = 'https://apps.apple.com/jp/app/id6763206400';
+    }, 2000);
+  })();
+</script>
 </body>
 </html>
